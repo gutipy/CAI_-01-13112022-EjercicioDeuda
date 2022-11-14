@@ -12,43 +12,57 @@ namespace EjercicioDeuda.Entidades
         private List<Pago> _pagos;
 
         //Constructores
-        public Operador(List<Prestamo> lst)
+        public Operador(List<Pago> lst)
         {
-            _prestamos = lst;
+            _pagos = lst;
         }
 
         //Propiedades
-        public List<Prestamo> Prestamos { get => _prestamos; }
-        public double ComisionTotal
-        {
-            get
-            {
-                double comisionTotal = 0;
-
-                foreach (Prestamo p in _prestamos)
-                {
-                    comisionTotal = comisionTotal + (p.CuotaInteres * PorcentajeComision);
-                }
-
-                return comisionTotal;
-            }
-        }
-
-        public double PorcentajeComision { get => 0.15; }
-
-        public double MontoTotal
+        public List<Pago> Pagos { get => _pagos; }
+        public int PromedioDiasAtraso
         {
             get
             {
                 //Declaración de variables
-                double montoTotal = 0;
+                //----------------------
+                int _diasAtrasoTotal = 0;
+                int _promedioDiasAtraso;
+                int _acumulador = 0;
+                //----------------------
 
-                foreach (Prestamo p in _prestamos)
+                foreach (Pago p in _pagos)
                 {
-                    montoTotal = montoTotal + (p.Monto);
+                    _diasAtrasoTotal = _diasAtrasoTotal + (p.FechaPago - p.FechaVencimiento).Days;
+
+                    _acumulador++;
                 }
 
-                return montoTotal;
+                _promedioDiasAtraso = _diasAtrasoTotal / _acumulador;
+
+                return _promedioDiasAtraso;
+            }
+        }
+
+        public double PromedioInteresPunitorio
+        {
+            get
+            {
+                //Declaración de variables
+                //----------------------
+                double _interesPunitorioTotal = 0;
+                double _promedioInteresPunitorio;
+                int _acumulador = 0;
+
+                foreach (Pago p in _pagos)
+                {
+                    _interesPunitorioTotal = _interesPunitorioTotal + (p.InteresPunitorio);
+
+                    _acumulador++;
+                }
+
+                _promedioInteresPunitorio = _interesPunitorioTotal / _acumulador;
+
+                return _promedioInteresPunitorio;
             }
         }
 

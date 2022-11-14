@@ -1,8 +1,10 @@
-﻿using System;
+﻿using EjercicioDeuda.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EjercicioDeuda.Negocio;
 
 namespace EjercicioDeuda.Presentacion
 {
@@ -49,32 +51,33 @@ namespace EjercicioDeuda.Presentacion
 
         public static void DesplegarOpcionesMenu()
         {
-            Console.WriteLine("1) Listar Prestamos");
-            Console.WriteLine("2) Alta de Préstamo");
+            Console.WriteLine("1) Listar Pagos");
+            Console.WriteLine("2) Alta de Pago");
             Console.WriteLine("3) Reportes");
             Console.WriteLine("X: Terminar");
         }
 
-        public static void ListarP(PrestamoNegocio prestamoNegocio)
+        public static void ListarP(PagoNegocio pagoNegocio)
         {
             //Declaración de variables
-            //---------------------------------------------------
-            List<Prestamo> _listadoPrestamos = new List<Prestamo>();
+            //------------------------------------------
+            List<Pago> _listadoPagos = new List<Pago>();
             string _acumulador = "";
-            //---------------------------------------------------
+            //------------------------------------------
 
-            _listadoPrestamos = prestamoNegocio.GetListaPrestamos("888086"); //Traigo el listado de préstamos de la capa de negocio que a su vez lo trae de la capa de datos
+            _listadoPagos = pagoNegocio.GetListaPagos("888086");
 
-            if (_listadoPrestamos.Count == 0 || _listadoPrestamos == null) //Valido si la lista de préstamos está vacía, caso afirmativo le informo al usuario y le pido que ingrese otra opción
+            if (_listadoPagos.Count == 0 || _listadoPagos == null)
             {
-                Console.WriteLine("La lista de préstamos está vacía, por favor ingrese otra opción.");
+                Console.WriteLine("Lo siento, pero el listado de pagos se encuentra vacío. Presione Enter para elegir otra opción");
 
                 Console.ReadKey();
                 Console.Clear();
             }
+
             else
             {
-                foreach (Prestamo p in _listadoPrestamos)
+                foreach (Pago p in _listadoPagos)
                 {
                     _acumulador +=
                         Environment.NewLine +
@@ -83,15 +86,18 @@ namespace EjercicioDeuda.Presentacion
                         ;
                 }
 
-                Console.WriteLine("Listado de todos los préstamos con número de registro 888.086: " + Environment.NewLine + _acumulador + Environment.NewLine);
+                Console.WriteLine("El listado de todos los pagos con número de registro 888.086 es: " + Environment.NewLine + _acumulador + Environment.NewLine);
 
                 Console.WriteLine("Presione Enter para elegir otra opción");
+
                 Console.ReadKey();
                 Console.Clear();
             }
+            
+            
         }
 
-        public static void AltaP(PrestamoNegocio prestamoNegocio)
+        public static void AltaP(Pago pagoNegocio)
         {
             //Declaración de variables
             //---------------------------------------------------------
